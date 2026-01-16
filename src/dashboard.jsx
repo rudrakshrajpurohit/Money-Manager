@@ -1,5 +1,5 @@
 import { Card } from './components/ui/card';
-import { DollarSign } from "lucide-react";
+import { DollarSign, TrendingDown, TrendingUp } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
 import Transactions from './transaction';
 import Budget from './budget';
@@ -8,11 +8,11 @@ import { useState } from 'react';
 export default function Dashboard({ transHistory, setTransHistory }) {
     console.log("Dashboard ledger:", transHistory)
     const income = transHistory
-        .filter(t => t.amount > 0)
+        .filter(t => t.category == "Income")
         .reduce((sum, t) => sum + t.amount, 0)
 
     const expense = transHistory
-        .filter(t => t.amount < 0)
+        .filter(t => t.category == "Expense")
         .reduce((sum, t) => sum + Math.abs(t.amount), 0)
 
     const balance = income - expense
@@ -32,37 +32,44 @@ export default function Dashboard({ transHistory, setTransHistory }) {
 
 
                 {/* Heading */}
-                <div className='flex items-center justify-start mb-8'>
-                    <h1 className="text-4xl font-bold text-foreground">Money Manager</h1>
+                <div className=''>
+                    <div className='flex flex-col items-start mb-8'>
+                        <h1 className="text-4xl font-bold text-foreground mb-2">Spendly</h1>
+                        <p>Track expenses, set budgets, and analyze your spending</p>
+                    </div>
+                    <div>
+                        
+                    </div>
                 </div>
 
                 {/* Information Cards */}
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-10'>
-                    <Card className="p-6 bg-linear-to-br from-slate-200 to-slate-300">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-muted-foreground mb-1">Total Balance</p>
-                                <p className="text-3xl font-bold text-foreground">{balance}</p>
-                            </div>
-                            <DollarSign className="w-12 h-12 text-primary opacity-20" />
-                        </div>
-                    </Card>
 
-                    <Card className="p-6 bg-linear-to-br from-green-50 to-green-100 border-primary/20">
+                    <Card className="p-6 bg-linear-to-br from-green-50 to-green-100 border-primary/20 hover:scale-105 transition-all">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">Total Income</p>
                                 <p className="text-3xl font-bold text-foreground">{income}</p>
                             </div>
-                            <DollarSign className="w-12 h-12 text-primary opacity-20" />
+                            <TrendingUp className="w-12 h-12 text-primary opacity-20" />
                         </div>
                     </Card>
 
-                    <Card className="p-6 bg-linear-to-br from-red-100 to-red-200">
+                    <Card className="p-6 bg-linear-to-br from-red-100 to-red-200 hover:scale-105 transition-all">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">Total Expense</p>
                                 <p className="text-3xl font-bold text-foreground">{expense}</p>
+                            </div>
+                            <TrendingDown className="w-12 h-12 text-primary opacity-20" />
+                        </div>
+                    </Card>
+
+                    <Card className="p-6 bg-linear-to-br from-slate-200 to-slate-300 hover:scale-105 transition-all">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm text-muted-foreground mb-1">Total Balance</p>
+                                <p className="text-3xl font-bold text-foreground">{balance}</p>
                             </div>
                             <DollarSign className="w-12 h-12 text-primary opacity-20" />
                         </div>

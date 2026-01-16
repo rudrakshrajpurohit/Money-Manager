@@ -5,14 +5,14 @@ import { useState } from 'react'
 
 export default function App() {
 
-   const [transHistory, setTransHistory] = useState([])
+  const [transHistory, setTransHistory] = useState([])
 
   return (
     <>
       <Dashboard
-  transHistory={transHistory}
-  setTransHistory={setTransHistory}
-/>
+        transHistory={transHistory}
+        setTransHistory={setTransHistory}
+      />
     </>
   )
 }
